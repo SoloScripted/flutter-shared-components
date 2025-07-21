@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_shared_components/flutter_shared_components.dart';
+import 'package:flutter_shared_components/screens/home_screen.dart';
 
 class SoloScriptedApp extends StatelessWidget {
   const SoloScriptedApp({
