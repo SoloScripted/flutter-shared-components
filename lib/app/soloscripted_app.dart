@@ -4,10 +4,10 @@ import 'package:flutter_shared_components/screens/home_screen.dart';
 class SoloScriptedApp extends StatelessWidget {
   const SoloScriptedApp({
     super.key,
-    required title,
-    required localizationsDelegates,
-    required supportedLocales,
-    required mainScreen
+    required this.title,
+    required this.localizationsDelegates,
+    required this.supportedLocales,
+    required this.mainScreen
   });
 
   final String title;
