@@ -1,41 +1,61 @@
-.PHONY: default all get clean format lint help
+# Define the FVM installation URL
+FVM_INSTALL_URL := https://fvm.app/install.sh
 
-# Default command to run when 'make' is called without a target.
-# It displays the help message.
-default: help
+# Define the default Flutter SDK version to install (optional, FVM will use .fvm/fvm_config.json if present)
+# FLUTTER_VERSION := 3.19.6 # Uncomment and set a specific version if needed
 
-# Run the full suite of checks: get, format, and lint.
-all: get format lint
+.PHONY: setup get lint help
 
-# Get project dependencies using 'flutter pub get'.
+# Target to set up the Flutter project, installing FVM if necessary
+setup:
+	@echo "Checking for FVM installation..."
+	@if ! command -v fvm >/dev/null 2>&1; then \
+		echo "FVM not found. Attempting to install FVM..."; \
+		if command -v curl >/dev/null 2>&1; then \
+			echo "Downloading and running FVM installation script..."; \
+			curl -fsSL $(FVM_INSTALL_URL) | bash; \
+			if [ -f "$$HOME/.zshrc" ]; then source "$$HOME/.zshrc"; fi; \
+			if [ -f "$$HOME/.bashrc" ]; then source "$$HOME/.bashrc"; fi; \
+			if [ -f "$$HOME/.profile" ]; then source "$$HOME/.profile"; fi; \
+			echo "FVM installation complete. Please restart your terminal or source your shell config if 'fvm' command is still not found."; \
+			echo "Proceeding with 'fvm install' now, but future calls might require a new terminal."; \
+		else \
+			echo "Error: 'curl' command not found. Please install curl or install FVM manually."; \
+			echo "See: https://fvm.app/docs/getting_started/installation"; \
+			exit 1; \
+		fi; \
+	fi
+	@echo "Installing project-specific Flutter SDK via FVM..."
+	@fvm install $(FLUTTER_VERSION) # Pass FLUTTER_VERSION if defined, otherwise FVM uses .fvm/fvm_config.json
+	@$(MAKE) get
+
+# Target to get Flutter project dependencies
+# Accepts CLEAN_LOCK=true to remove pubspec.lock before getting packages
 get:
-	@echo "Getting dependencies using FVM..."
+	@echo "Getting Flutter project dependencies..."
+	@if [ "$(CLEAN_LOCK)" = "true" ]; then \
+		echo "Cleaning pubspec.lock..."; \
+		rm -f pubspec.lock; \
+	fi
 	@fvm flutter pub get
 
-# Clean the project build artifacts using 'flutter clean'.
-clean:
-	@echo "Cleaning project using FVM..."
-	@fvm flutter clean
-
-# Format all Dart files using 'dart format .'.
-format:
-	@echo "Formatting Dart files using FVM..."
-	@fvm dart format .
-
-# Lint all Dart files to check for style and potential errors using 'flutter analyze'.
+# Target to run Flutter analysis (linting)
 lint:
-	@echo "Linting Dart files using FVM..."
+	@echo "Running Flutter analysis (linting)..."
 	@fvm flutter analyze
 
-# Display this help message.
+# Target to display help information for available commands
 help:
-	@echo ""
-	@echo "Usage: make <target>"
+	@echo "Usage: make [target]"
 	@echo ""
 	@echo "Available targets:"
-	@echo "  help          Displays this help message. This is the default target."
-	@echo "  all           Runs the full suite of checks: get, format, and lint."
-	@echo "  get           Fetches project dependencies using 'fvm flutter pub get'."
-	@echo "  clean         Removes build artifacts with 'fvm flutter clean'."
-	@echo "  format        Formats all Dart files in the project with 'fvm dart format .'."
-	@echo "  lint          Analyzes the project's source code for errors and warnings with 'fvm flutter analyze'."
+	@echo "  setup      : Checks for FVM, installs it if missing, installs project Flutter SDK, and gets dependencies."
+	@echo "  get        : Gets Flutter project dependencies. Use 'make get CLEAN_LOCK=true' to remove pubspec.lock first."
+	@echo "  lint       : Runs Flutter analysis (linting) on the project."
+	@echo "  help       : Displays this help message."
+
+# Note for Windows users:
+# FVM installation on Windows typically involves PowerShell, Chocolatey, or Scoop.
+# Automating this directly in a generic Makefile target is complex.
+# It's recommended to install FVM manually on Windows if you encounter issues.
+# See: https://fvm.app/docs/getting_started/installation

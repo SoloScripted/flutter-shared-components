@@ -20,7 +20,7 @@ jobs:
           cache: true
 
       - name: Install dependencies
-        run: make get
+        run: make setup
 
       - name: Run lint command
         run: make lint

@@ -55,11 +55,13 @@ This project uses FVM (Flutter Version Management) to ensure all contributors us
 
 ### Setup
 
-1.  Install FVM on your machine.
-2.  Run `fvm install` in the project root to install the correct Flutter version.
-3.  Prefix all `flutter` and `dart` commands with `fvm`. For example, use `fvm flutter run` instead of `flutter run`.
+To get started with development, run the setup command. This will check if you have FVM installed, use it to install the correct project-specific Flutter SDK, and fetch all dependencies.
 
-The provided `Makefile.mk` already uses `fvm`, so you can use targets like `make get` and `make lint` directly.
+```sh
+make setup
+```
+
+The provided `Makefile.mk` handles all other common tasks like `make format` and `make lint`. These commands automatically use the project's FVM-managed Flutter SDK.
 ```
 
 ## Additional information
