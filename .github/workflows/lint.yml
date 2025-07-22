@@ -13,8 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up FVM
-        uses: leoafarias/fvm-action@v1
+      - name: Set up Flutter from FVM config
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version-file: .fvm/fvm_config.json
+          cache: true
 
       - name: Install dependencies
         run: make get
