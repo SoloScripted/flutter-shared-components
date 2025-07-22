@@ -49,6 +49,21 @@ class MyApp extends StatelessWidget {
 }
 ```
 
+## Development
+
+This project uses FVM (Flutter Version Management) to ensure all contributors use the same Flutter SDK version.
+
+### Setup
+
+To get started with development, run the setup command. This will check if you have FVM installed, use it to install the correct project-specific Flutter SDK, and fetch all dependencies.
+
+```sh
+make setup
+```
+
+The provided `Makefile.mk` handles all other common tasks like `make format` and `make lint`. These commands automatically use the project's FVM-managed Flutter SDK.
+```
+
 ## Additional information
 
 TODO: Tell users more about the package: where to find more information, how to
