@@ -50,18 +50,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     _soloAnimation =
         Tween<Offset>(begin: const Offset(-1.5, 0), end: Offset.zero).animate(
-          CurvedAnimation(
-            parent: _animationController,
-            curve: const Interval(0.6, 1.0, curve: Curves.easeOut),
-          ),
-        );
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.6, 1.0, curve: Curves.easeOut),
+      ),
+    );
     _scriptedAnimation =
         Tween<Offset>(begin: const Offset(1.5, 0), end: Offset.zero).animate(
-          CurvedAnimation(
-            parent: _animationController,
-            curve: const Interval(0.6, 1.0, curve: Curves.easeOut),
-          ),
-        );
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.6, 1.0, curve: Curves.easeOut),
+      ),
+    );
 
     _fadeOutAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
       CurvedAnimation(parent: _fadeOutController, curve: Curves.easeIn),

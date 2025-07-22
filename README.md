@@ -6,6 +6,7 @@ A collection of reusable Flutter widgets and screens designed to be easily integ
 
 *   **`HomeScreen`**: A splash screen with a logo and company name animation. It automatically navigates to a specified screen after the animation completes.
 *   **`StyledActionButton`**: A customizable button with a pressed-down effect and shadow.
+*   **`BadgedActionButton`**: A wrapper around `StyledActionButton` that adds a small badge to the corner, useful for notifications.
 
 ## Getting started
 
