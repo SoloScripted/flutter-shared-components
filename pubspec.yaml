@@ -6,8 +6,8 @@ repository: https://github.com/SoloScripted/flutter-shared-components
 publish_to: 'none' # Prevent accidental publishing to pub.dev
 
 environment:
-  sdk: ">=3.3.0 <4.0.0"
-  flutter: ">=3.19.0"
+  sdk: ">=3.4.0 <4.0.0" # Dart SDK for Flutter 3.22.0
+  flutter: ">=3.22.0 <4.0.0"
 
 dependencies:
   flutter:

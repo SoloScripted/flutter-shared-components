@@ -49,6 +49,19 @@ class MyApp extends StatelessWidget {
 }
 ```
 
+## Development
+
+This project uses FVM (Flutter Version Management) to ensure all contributors use the same Flutter SDK version.
+
+### Setup
+
+1.  Install FVM on your machine.
+2.  Run `fvm install` in the project root to install the correct Flutter version.
+3.  Prefix all `flutter` and `dart` commands with `fvm`. For example, use `fvm flutter run` instead of `flutter run`.
+
+The provided `Makefile.mk` already uses `fvm`, so you can use targets like `make get` and `make lint` directly.
+```
+
 ## Additional information
 
 TODO: Tell users more about the package: where to find more information, how to
