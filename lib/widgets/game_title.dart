@@ -16,20 +16,37 @@ class GameTitle extends StatelessWidget {
     this.titlePart2Color,
   });
 
+  static const double _kSmallScreenWidth = 700;
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        _buildLogo(context),
-        const SizedBox(width: 12),
-        _buildTitle(context),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isSmall =  MediaQuery.of(context).size.width < _kSmallScreenWidth;
+        final logoSize = isSmall ? 52.0 : 64.0;
+        final titleTextStyle = (isSmall
+                ? Theme.of(context).textTheme.headlineSmall
+                : Theme.of(context).textTheme.headlineMedium)
+            ?.copyWith(fontWeight: FontWeight.bold);
+
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _buildLogo(context, logoSize: logoSize),
+            SizedBox(width: isSmall ? 8.0 : 12.0),
+            _buildTitle(
+              context,
+              isSmall: isSmall,
+              titleStyle: titleTextStyle,
+            ),
+          ],
+        );
+      },
     );
   }
 
-  Widget _buildLogo(BuildContext context) {
+  Widget _buildLogo(BuildContext context, {required double logoSize}) {
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
@@ -45,26 +62,54 @@ class GameTitle extends StatelessWidget {
       ),
       child: Image.asset(
         logoAsset,
-        height: 64,
+        height: logoSize,
+        width: logoSize,
+        fit: BoxFit.cover,
         errorBuilder: (context, error, stackTrace) {
-          return const Icon(
+          return Icon(
             Icons.code_sharp,
-            size: 64,
+            size: logoSize,
             color: Colors.white,
           );
         },
       ),
     );
   }
-
-  Widget _buildTitle(BuildContext context) {
+  Widget _buildTitle(
+    BuildContext context, {
+    required bool isSmall,
+    TextStyle? titleStyle,
+  }) {
     final colorScheme = Theme.of(context).colorScheme;
+
+    if (isSmall) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            titlePart1,
+            style: titleStyle?.copyWith(color: titlePart1Color),
+          ),
+          Text(
+            titlePart2,
+            style: titleStyle?.copyWith(
+              color: titlePart2Color ?? colorScheme.onSurface,
+            ),
+          ),
+        ],
+      );
+    }
+
     return RichText(
       text: TextSpan(
-        style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+        style: titleStyle,
         children: <TextSpan>[
           TextSpan(text: titlePart1, style: TextStyle(color: titlePart1Color)),
-          TextSpan(text: titlePart2, style: TextStyle(color: titlePart2Color ?? colorScheme.onSurface)),
+          TextSpan(
+            text: titlePart2,
+            style: TextStyle(color: titlePart2Color ?? colorScheme.onSurface),
+          ),
         ],
       ),
     );
