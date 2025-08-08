@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_shared_components/screens/home_screen.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 
-
 class SoloScriptedApp extends StatefulWidget {
-
   const SoloScriptedApp(
       {super.key,
       required this.title,
       required this.localizationsDelegates,
       required this.supportedLocales,
       required this.mainScreen});
-  
+
   final String title;
 
   final List<LocalizationsDelegate<dynamic>> localizationsDelegates;

@@ -22,7 +22,7 @@ class GameTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final isSmall =  MediaQuery.of(context).size.width < _kSmallScreenWidth;
+        final isSmall = MediaQuery.of(context).size.width < _kSmallScreenWidth;
         final logoSize = isSmall ? 52.0 : 64.0;
         final titleTextStyle = (isSmall
                 ? Theme.of(context).textTheme.headlineSmall
@@ -75,6 +75,7 @@ class GameTitle extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildTitle(
     BuildContext context, {
     required bool isSmall,
