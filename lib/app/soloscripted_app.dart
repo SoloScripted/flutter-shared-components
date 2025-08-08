@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_shared_components/screens/home_screen.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 
+
 class SoloScriptedApp extends StatefulWidget {
+
   const SoloScriptedApp(
       {super.key,
       required this.title,
@@ -11,8 +13,11 @@ class SoloScriptedApp extends StatefulWidget {
       required this.mainScreen});
   
   final String title;
+
   final List<LocalizationsDelegate<dynamic>> localizationsDelegates;
+
   final List<Locale> supportedLocales;
+
   final Widget mainScreen;
 
   @override
@@ -35,6 +40,8 @@ class _SoloScriptedAppState extends State<SoloScriptedApp> {
         await AppTrackingTransparency.requestTrackingAuthorization();
       }
     } catch (e) {
+      // Silently ignore if there's an error during the request, as the
+      // app should continue to function without this permission.
     }
   }
 
