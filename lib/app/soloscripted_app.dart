@@ -28,10 +28,13 @@ class _SoloScriptedAppState extends State<SoloScriptedApp> {
   @override
   void initState() {
     super.initState();
-    _initialize();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      _initialize();
+    });
   }
 
   Future<void> _initialize() async {
+    await Future.delayed(const Duration(milliseconds: 1000));
     await _requestTrackingAuthorization();
     if (mounted) {
       setState(() {
@@ -40,16 +43,22 @@ class _SoloScriptedAppState extends State<SoloScriptedApp> {
     }
   }
 
-  Future<void> _requestTrackingAuthorization() async {
+  Future<String?> _requestTrackingAuthorization() async {
     try {
       final status = await AppTrackingTransparency.trackingAuthorizationStatus;
-      if (status == TrackingStatus.notDetermined) {
+      if (status == TrackingStatus.authorized) {
+        final uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
+        return uuid;
+      } else if(status == TrackingStatus.notDetermined) {
         await AppTrackingTransparency.requestTrackingAuthorization();
+        final uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
+        return uuid;
       }
     } catch (e) {
       // Silently ignore if there's an error during the request, as the
       // app should continue to function without this permission.
     }
+    return null;
   }
 
   @override
