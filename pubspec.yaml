@@ -1,6 +1,6 @@
 name: flutter_shared_components
 description: "A collection of reusable Flutter widgets and screens designed to be easily integrated into your projects."
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/SoloScripted/flutter-shared-components
 repository: https://github.com/SoloScripted/flutter-shared-components
 publish_to: 'none' # Prevent accidental publishing to pub.dev
