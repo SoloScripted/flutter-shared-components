@@ -28,7 +28,7 @@ class _SoloScriptedAppState extends State<SoloScriptedApp> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _initialize();
     });
   }
@@ -49,7 +49,7 @@ class _SoloScriptedAppState extends State<SoloScriptedApp> {
       if (status == TrackingStatus.authorized) {
         final uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
         return uuid;
-      } else if(status == TrackingStatus.notDetermined) {
+      } else if (status == TrackingStatus.notDetermined) {
         await AppTrackingTransparency.requestTrackingAuthorization();
         final uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
         return uuid;
