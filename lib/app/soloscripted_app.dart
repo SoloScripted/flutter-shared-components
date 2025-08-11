@@ -23,12 +23,21 @@ class SoloScriptedApp extends StatefulWidget {
 }
 
 class _SoloScriptedAppState extends State<SoloScriptedApp> {
+  bool _isReady = false;
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _requestTrackingAuthorization();
-    });
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    await _requestTrackingAuthorization();
+    if (mounted) {
+      setState(() {
+        _isReady = true;
+      });
+    }
   }
 
   Future<void> _requestTrackingAuthorization() async {
@@ -53,9 +62,11 @@ class _SoloScriptedAppState extends State<SoloScriptedApp> {
       ),
       localizationsDelegates: widget.localizationsDelegates,
       supportedLocales: widget.supportedLocales,
-      home: HomeScreen(
-        nextScreen: widget.mainScreen,
-      ),
+      home: _isReady
+          ? HomeScreen(
+              nextScreen: widget.mainScreen,
+            )
+          : const Scaffold(body: Center(child: CircularProgressIndicator())),
     );
   }
 }
